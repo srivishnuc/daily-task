@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import HomePage from './container/HomePage'
+import Signin from './container/Signin'
+import Signup from './container/Signup'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { BrowserRouter as Router } from 'react-router-dom'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core'
+import { green, yellow, red } from '@material-ui/core/colors';
+require('typeface-roboto')
+
+
+
+const theme = createMuiTheme({
+  palette: {
+    primary: green,
+    secondary: yellow
+  },
+  status: {
+    danger: red
+  },
+  spacing: 2,
+
+})
+
+
+
+
+class App extends React.Component {
+
+
+  render() {
+    return (
+      <ThemeProvider theme={theme} >
+        <Router>
+          <Signup />
+        </Router>
+      </ThemeProvider>
+    )
+  }
+
 }
+
 
 export default App;
