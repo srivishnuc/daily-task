@@ -14,7 +14,7 @@ class HomePage extends React.Component {
         const { classes } = this.props
         return (
             <Paper className={classes.mainPaper} elevation={3}>
-
+                <div style={{ height: '600px' }}></div>
             </Paper>
         )
     }

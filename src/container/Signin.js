@@ -22,8 +22,8 @@ class Signin extends React.Component {
     render() {
         const { classes } = this.props
         return (
-            <Grid container justify="flex-end">
-                <Grid item xs={12}>
+            <Grid container justify="flex-end" xs={12}>
+                <Grid item>
                     <Paper className={classes.login} elevation={2}>
                         <Typography className={classes.root} variant="h5" align="center">Login</Typography>
                         <TextField className={classes.root} label="Employee No" />
