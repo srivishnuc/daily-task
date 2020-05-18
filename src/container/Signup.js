@@ -1,8 +1,7 @@
 import React from 'react'
 import { Typography, TextField, Button, Paper, withStyles, Grid, MenuItem } from '@material-ui/core'
-import { getData } from '../utility/api'
+import { getData, postData } from '../utility/api'
 import SelectList from '../component/Select'
-import { useHistory } from 'react-router-dom'
 
 const useStyles = (style) => ({
     root: {
@@ -11,9 +10,9 @@ const useStyles = (style) => ({
     signup: {
         display: 'flex',
         flexDirection: 'column',
-        margin: style.spacing(10),
-        padding: style.spacing(25),
+        padding: style.spacing(20),
         borderRadius: '10px',
+        width: 'auto'
     },
     itemList: {
         marginTop: style.spacing(8)
@@ -25,13 +24,49 @@ class Signup extends React.Component {
 
     constructor() {
         super()
-        this.state = { roles: "", role: '', department: "", dept: '' }
+        this.state = { empno: "", empname: "", password: "", rpassword: "", roles: "", role: '', department: "", dept: '', error: { empname: '', empno: '', password: '', passmatch: '' } }
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
         getData('/user/regData', this.regData)
+    }
 
+    validateData = (error) => {
+        let valid = true;
+        Object.values(error).forEach(val => val.length > 0 && (valid = false))
+        return valid
+    }
+
+    handleRegister = () => {
+        const { dept, role, empname, empno, password } = this.state
+        // dept = dept.trim();
+        // role = role.trim();
+        // empname = empname.trim();
+        // empno = empno.trim();
+        // password = password.trim();
+        // rpassword = rpassword.trim();
+        // if (password !== rpassword)
+        //     this.setState({ error: true, errorMsg: 'Password did not match' })
+        const data = { deptno: dept, desno: role, empname, empno, password }
+        if (this.validateData(this.state.error)) {
+            postData('/user/', data, this.afterRegister)
+            // console.info('Valid Data')
+        }
+        else {
+            //console.error('Invalid Data')
+        }
+    }
+
+    afterRegister = (res) => {
+
+        this.setState({ empname: "", empno: "", password: "", rpassword: "", dept: "", role: "" })
+        if (res.status === 'success') {
+
+        }
+        else {
+
+        }
     }
 
     regData = (res) => {
@@ -47,30 +82,56 @@ class Signup extends React.Component {
 
     handleChange = (e) => {
         const { value, name } = e.target
-        this.setState({ [name]: value })
+        let error = this.state.error
+        switch (name) {
+            case 'empname':
+                if (value.length < 4)
+                    error.empname = 'Minimum 4 character'
+                else if (value.length > 50)
+                    error.empname = 'Maximum 50 character'
+                else
+                    error.empname = ''
+                break;
+            case 'empno':
+                error.empno = value.length !== 4 ? 'Enter 4 digit employee id ' : ''
+                break;
+            case 'password':
+                if (value.length < 8)
+                    error.password = 'Password must be atleast 8 character';
+                else if (this.state.rpassword !== value && this.state.rpassword !== "")
+                    error.password = '"Password not matched"'
+                else
+                    error.password = ''
+                break;
+            case 'rpassword':
+                error.passmatch = (this.state.password === value) ? '' : "Password not matched"
+                break;
+            default:
+                break;
+        }
+
+        this.setState({ error, [name]: value })
     }
 
 
 
 
     render() {
-        const history = useHistory()
-        const { roles, department, dept, role } = this.state
-        const { classes } = this.props
+        const { roles, department, dept, role, empname, empno, password, rpassword } = this.state
 
-
+        const { classes, history } = this.props
         return (
-            <Grid container xs={12} justify="flex-end">
-                <Grid item >
+            <Grid container direction="row" justify="flex-end" alignItems="center">
+                <Grid item>
                     <Paper className={classes.signup}>
                         <Typography className={classes.root} variant="h5" align="center">Create Employee</Typography>
-                        <TextField className={classes.root} label="Employee Name" />
-                        <TextField className={classes.root} label="Employee No" />
+                        <TextField type="text" className={classes.root} label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
+                        <TextField type="number" className={classes.root} label="Employee No" name="empno" value={empno} onChange={this.handleChange} />
                         <SelectList name="dept" label="Department" handleChange={this.handleChange} value={dept} list={department} />
                         <SelectList name="role" label="Designation" handleChange={this.handleChange} value={role} list={roles} />
-                        <TextField className={classes.root} label="Password" />
-                        <TextField className={classes.root} label="Re-Type Password" />
-                        <Button className={classes.root} variant="contained" color="primary" onClick={() => { }} >Create</Button>
+                        <TextField type="password" className={classes.root} label="Password" name="password" value={password} onChange={this.handleChange} />
+                        <TextField type="password" className={classes.root} label="Re-Type Password" name="rpassword" value={rpassword} onChange={this.handleChange} />
+                        <Button className={classes.root} variant="contained" color="primary" onClick={this.handleRegister} >Create</Button>
                         <Button className={classes.root} color="primary" onClick={() => { history.push('/signin') }} >Already have account</Button>
                     </Paper>
                 </Grid>

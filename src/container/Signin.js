@@ -11,25 +11,26 @@ const useStyles = (style) => ({
     login: {
         display: 'flex',
         flexDirection: 'column',
-        margin: style.spacing(25),
-        padding: style.spacing(25),
+        padding: style.spacing(20),
         borderRadius: '10px',
+        marginTop: '35%',
+        marginRight: '10%'
     }
 })
 
 class Signin extends React.Component {
 
     render() {
-        const { classes } = this.props
+        const { classes, history } = this.props
         return (
-            <Grid container justify="flex-end" xs={12}>
+            <Grid container alignItems="center" justify="flex-end" >
                 <Grid item>
                     <Paper className={classes.login} elevation={2}>
                         <Typography className={classes.root} variant="h5" align="center">Login</Typography>
                         <TextField className={classes.root} label="Employee No" />
                         <TextField className={classes.root} label="Password" />
                         <Button className={classes.root} variant="contained" color="primary" onClick={() => { }} >Login</Button>
-                        <Button className={classes.root} color="primary" onClick={() => { }} >Create Employee</Button>
+                        <Button className={classes.root} color="primary" onClick={() => { history.push('/signup') }} >Create Employee</Button>
                     </Paper>
                 </Grid>
             </Grid>
