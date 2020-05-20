@@ -2,10 +2,9 @@ import { api } from '../constant/index'
 
 
 export const getData = (url, callback) => {
-
     fetch(`${api.url}${url}`, {
         method: 'get',
-        header: {
+        headers: {
             'Content-Type': 'application/json',
             'authorization': localStorage.getItem('token')
         }
@@ -15,9 +14,11 @@ export const getData = (url, callback) => {
 }
 
 export const postData = (url, data, callback) => {
+    console.log(`${api.url}${url}`)
+
     fetch(`${api.url}${url}`, {
         method: 'post',
-        header: {
+        headers: {
             'Content-Type': 'application/json',
             'authorization': localStorage.getItem('token')
         },
@@ -32,7 +33,7 @@ export const postData = (url, data, callback) => {
 export const putData = (url, data, callback) => {
     fetch(`${api.url}${url}`, {
         method: 'put',
-        header: {
+        headers: {
             'Content-Type': 'application/json',
             'authorization': localStorage.getItem('token'),
         }, body: JSON.stringify(data)
