@@ -85,7 +85,7 @@ class Signup extends React.Component {
         let error = this.state.error
         switch (name) {
             case 'empname':
-                if (value.length < 4)
+                if (value.length < 4 || value.length !== 0)
                     error.empname = 'Minimum 4 character'
                 else if (value.length > 50)
                     error.empname = 'Maximum 50 character'
@@ -93,10 +93,10 @@ class Signup extends React.Component {
                     error.empname = ''
                 break;
             case 'empno':
-                error.empno = value.length !== 4 ? 'Enter 4 digit employee id ' : ''
+                error.empno = (value.length !== 0 || value.length !== 4 || typeof value !== 'number') ? 'Enter 4 digit employee id ' : ''
                 break;
             case 'password':
-                if (value.length < 8)
+                if (value.length < 8 || value.length !== 0)
                     error.password = 'Password must be atleast 8 character';
                 else if (this.state.rpassword !== value && this.state.rpassword !== "")
                     error.password = '"Password not matched"'
@@ -123,17 +123,19 @@ class Signup extends React.Component {
         return (
             <Grid container direction="row" justify="flex-end" alignItems="center">
                 <Grid item>
-                    <Paper className={classes.signup}>
-                        <Typography className={classes.root} variant="h5" align="center">Create Employee</Typography>
-                        <TextField type="text" className={classes.root} label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
-                        <TextField type="number" className={classes.root} label="Employee No" name="empno" value={empno} onChange={this.handleChange} />
-                        <SelectList name="dept" label="Department" handleChange={this.handleChange} value={dept} list={department} />
-                        <SelectList name="role" label="Designation" handleChange={this.handleChange} value={role} list={roles} />
-                        <TextField type="password" className={classes.root} label="Password" name="password" value={password} onChange={this.handleChange} />
-                        <TextField type="password" className={classes.root} label="Re-Type Password" name="rpassword" value={rpassword} onChange={this.handleChange} />
-                        <Button className={classes.root} variant="contained" color="primary" onClick={this.handleRegister} >Create</Button>
-                        <Button className={classes.root} color="primary" onClick={() => { history.push('/signin') }} >Already have account</Button>
-                    </Paper>
+                    <form>
+                        <Paper className={classes.signup}>
+                            <Typography className={classes.root} variant="h5" align="center">Create Employee</Typography>
+                            <TextField type="text" className={classes.root} label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
+                            <TextField type="text" className={classes.root} label="Employee No" name="empno" value={empno} onChange={this.handleChange} />
+                            <SelectList name="dept" label="Department" handleChange={this.handleChange} value={dept} list={department} />
+                            <SelectList name="role" label="Designation" handleChange={this.handleChange} value={role} list={roles} />
+                            <TextField type="password" className={classes.root} label="Password" name="password" value={password} onChange={this.handleChange} />
+                            <TextField type="password" className={classes.root} label="Re-Type Password" name="rpassword" value={rpassword} onChange={this.handleChange} />
+                            <Button className={classes.root} variant="contained" color="primary" onClick={this.handleRegister} >Create</Button>
+                            <Button className={classes.root} color="primary" onClick={() => { history.push('/signin') }} >Already have account</Button>
+                        </Paper>
+                    </form>
                 </Grid>
             </Grid>
         )

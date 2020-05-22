@@ -23,12 +23,12 @@ const theme = createMuiTheme({
 })
 
 
-const ProtectedRoute = (RouteComponent, props) => localStorage.getItem('token') ? <RouteComponent {...props} /> : <Redirect to={{ pathname: '/signin' }} />
 
 
 class App extends React.Component {
 
 
+  ProtectedRoute = (RouteComponent, props) => localStorage.getItem('token') ? <RouteComponent {...props} /> : <Redirect to={{ pathname: '/signin' }} />
 
   render() {
 
@@ -38,7 +38,7 @@ class App extends React.Component {
           <Switch>
             <Route path='/signup' render={props => <Signup {...props} />} />
             <Route path='/signin' render={props => <Signin {...props} />} />
-            <Route path='/home' render={props => ProtectedRoute(HomePage, props)} />
+            <Route path='/home' render={props => this.ProtectedRoute(HomePage, props)} />
           </Switch>
         </Router>
       </ThemeProvider >
