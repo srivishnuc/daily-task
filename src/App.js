@@ -2,9 +2,10 @@ import React from 'react';
 import HomePage from './container/HomePage'
 import Signin from './container/Signin'
 import Signup from './container/Signup'
+import TaskForm from './container/TaskForm';
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import { createMuiTheme, ThemeProvider, Paper, withStyles } from '@material-ui/core'
+import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core'
 import { green, yellow, red } from '@material-ui/core/colors';
 require('typeface-roboto')
 
@@ -47,9 +48,10 @@ class App extends React.Component {
           <Switch>
             <Route path='/signup' render={props => <Signup {...props} />} />
             <Route path='/signin' render={props => <Signin {...props} />} />
-            <Paper className={classes.root} elevation={3}>
-              <Route path='/home' render={props => this.ProtectedRoute(HomePage, props)} />
-            </Paper>
+
+            <Route path='/' exact render={props => this.ProtectedRoute(HomePage, props)} />
+            <Route path='/query' render={props => this.ProtectedRoute(TaskForm, props)} />
+
           </Switch>
         </Router>
       </ThemeProvider >

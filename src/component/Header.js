@@ -2,23 +2,26 @@ import React from 'react'
 import { withStyles, AppBar, Typography, Button } from '@material-ui/core'
 // import { logout } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
-import TemporaryDrawer from '../component/AppDraw'
+import Drawer from './Drawer'
 
 
 const useStyles = () => ({
     root: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "center"
+        justifyContent: "center",
+        height: '8%'
     },
     logout: {
         position: 'absolute',
         right: '3%',
-        height: '100%',
+        top: '3%',
+        height: '50%',
+        padding: '1%',
         '&:hover': {
-            cursor: 'pointer'
+            cursor: 'pointer',
         }
-    }
+    },
 })
 
 function Header(props) {
@@ -32,8 +35,8 @@ function Header(props) {
     return (
         <React.Fragment>
             <AppBar className={classes.root}>
-                <TemporaryDrawer />
-                <Typography variant="h5" align="center">Task Reporter</Typography>
+                <Drawer history={history} />
+                <Typography variant="h5">Task Reporter</Typography>
                 <img className={classes.logout} src={require(`../images/icons/logout.png`)} onClick={handleLogout} />
             </AppBar >
 

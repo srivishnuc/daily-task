@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../component/Header'
-import { Box, withStyles, Button } from '@material-ui/core'
+import { Paper, withStyles, Button } from '@material-ui/core'
 
 const useStyles = (styles) => ({
     root: {
@@ -16,9 +16,9 @@ class HomePage extends React.Component {
     render() {
         const { classes } = this.props
         return (
-            <Box className={classes.root} elevation={3}>
+            <Paper className={classes.root} elevation={3}>
                 <Header />
-            </Box >
+            </Paper >
         )
     }
 }

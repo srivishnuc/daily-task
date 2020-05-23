@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import { Paper, withStyles } from '@material-ui/core'
 
 class TaskForm extends React.Component {
 
@@ -9,8 +9,9 @@ class TaskForm extends React.Component {
     render() {
 
         return (
-            <Box>
-            </Box>
+            <Paper>
+                <h1>Test</h1>
+            </Paper>
 
         )
 
@@ -20,5 +21,5 @@ class TaskForm extends React.Component {
 
 }
 
-
+export default TaskForm
 
