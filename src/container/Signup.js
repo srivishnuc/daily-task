@@ -4,7 +4,7 @@ import { getData, postData } from '../utility/api'
 import SelectList from '../component/Select'
 
 const useStyles = (style) => ({
-    root: {
+    field: {
         margin: style.spacing(4)
     },
     signup: {
@@ -125,15 +125,15 @@ class Signup extends React.Component {
                 <Grid item>
                     <form>
                         <Paper className={classes.signup}>
-                            <Typography className={classes.root} variant="h5" align="center">Create Employee</Typography>
-                            <TextField type="text" className={classes.root} label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
-                            <TextField type="text" className={classes.root} label="Employee No" name="empno" value={empno} onChange={this.handleChange} />
+                            <Typography className={classes.field} variant="h5" align="center">Create Employee</Typography>
+                            <TextField type="text" className={classes.field} label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
+                            <TextField type="text" className={classes.field} label="Employee No" name="empno" value={empno} onChange={this.handleChange} />
                             <SelectList name="dept" label="Department" handleChange={this.handleChange} value={dept} list={department} />
                             <SelectList name="role" label="Designation" handleChange={this.handleChange} value={role} list={roles} />
-                            <TextField type="password" className={classes.root} label="Password" name="password" value={password} onChange={this.handleChange} />
-                            <TextField type="password" className={classes.root} label="Re-Type Password" name="rpassword" value={rpassword} onChange={this.handleChange} />
-                            <Button className={classes.root} variant="contained" color="primary" onClick={this.handleRegister} >Create</Button>
-                            <Button className={classes.root} color="primary" onClick={() => { history.push('/signin') }} >Already have account</Button>
+                            <TextField type="password" className={classes.field} label="Password" name="password" value={password} onChange={this.handleChange} />
+                            <TextField type="password" className={classes.field} label="Re-Type Password" name="rpassword" value={rpassword} onChange={this.handleChange} />
+                            <Button className={classes.field} variant="contained" color="primary" onClick={this.handleRegister} >Create</Button>
+                            <Button className={classes.field} color="primary" onClick={() => { history.push('/signin') }} >Already have account</Button>
                         </Paper>
                     </form>
                 </Grid>

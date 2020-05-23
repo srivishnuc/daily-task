@@ -1,10 +1,9 @@
 import React from 'react'
 import Header from '../component/Header'
-import { Paper, withStyles, Button } from '@material-ui/core'
-
+import { Box, withStyles, Button } from '@material-ui/core'
 
 const useStyles = (styles) => ({
-    mainPaper: {
+    root: {
         width: 'auto',
         height: 800
     }
@@ -14,13 +13,12 @@ const useStyles = (styles) => ({
 class HomePage extends React.Component {
 
 
-
     render() {
         const { classes } = this.props
         return (
-            <Paper className={classes.mainPaper} elevation={3}>
+            <Box className={classes.root} elevation={3}>
                 <Header />
-            </Paper >
+            </Box >
         )
     }
 }

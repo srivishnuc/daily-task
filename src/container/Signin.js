@@ -7,7 +7,7 @@ import { Redirect, Route } from 'react-router-dom'
 
 const useStyles = (style) => ({
 
-    root: {
+    field: {
         margin: style.spacing(4)
     },
     login: {
@@ -73,16 +73,18 @@ class Signin extends React.Component {
             <Grid container alignItems="center" justify="flex-end" >
                 <Grid item>
                     <form>
+
                         <Paper className={classes.login} elevation={2}>
-                            <Typography className={classes.root} variant="h5" align="center">Login</Typography>
-                            <TextField type="text" name="empno" onChange={this.handleChange} value={empno} className={classes.root} label="Employee No" />
-                            <TextField type="password" name="password" onChange={this.handleChange} value={password} className={classes.root} label="Password" />
-                            <Button className={classes.root} variant="contained" color="primary" onClick={this.handleLogin} >Login</Button>
-                            <Button className={classes.root} color="primary" onClick={() => { history.push('/signup') }} >Create Employee</Button>
+                            <Typography className={classes.field} variant="h5" align="center">Login</Typography>
+                            <TextField type="text" name="empno" onChange={this.handleChange} value={empno} className={classes.field} label="Employee No" />
+                            <TextField type="password" name="password" onChange={this.handleChange} value={password} className={classes.field} label="Password" />
+                            <Button className={classes.field} variant="contained" color="primary" onClick={this.handleLogin} >Login</Button>
+                            <Button className={classes.field} color="primary" onClick={() => { history.push('/signup') }} >Create Employee</Button>
                         </Paper>
+
                     </form>
                 </Grid>
-            </Grid>
+            </Grid >
         )
     }
 
