@@ -1,5 +1,5 @@
 import React from 'react'
-import { withStyles, AppBar, Typography, Button } from '@material-ui/core'
+import { withStyles, AppBar, Typography, Button, Toolbar } from '@material-ui/core'
 // import { logout } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
 import Drawer from './Drawer'
@@ -10,7 +10,7 @@ const useStyles = () => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        height: '8%'
+        height: '5%',
     },
     logout: {
         position: 'absolute',
@@ -34,7 +34,7 @@ function Header(props) {
 
     return (
         <React.Fragment>
-            <AppBar className={classes.root}>
+            <AppBar className={classes.root} position="static">
                 <Drawer history={history} />
                 <Typography variant="h5">Task Reporter</Typography>
                 <img className={classes.logout} src={require(`../images/icons/logout.png`)} onClick={handleLogout} />
