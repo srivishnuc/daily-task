@@ -59,8 +59,9 @@ class TaskForm extends React.Component {
     }
 
     resData = (res) => {
-        if (res.status === 'success') {
+        console.log(res)
 
+        if (res.status === 'success') {
         }
         else {
 
