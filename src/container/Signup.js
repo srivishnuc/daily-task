@@ -81,11 +81,11 @@ class Signup extends React.Component {
     }
 
     handleChange = (e) => {
-        const { value, name } = e.target
+        var { value, name } = e.target
         let error = this.state.error
         switch (name) {
             case 'empname':
-                if (value.length < 4 || value.length !== 0)
+                if (value.length < 4 || value.length === 0)
                     error.empname = 'Minimum 4 character'
                 else if (value.length > 50)
                     error.empname = 'Maximum 50 character'
@@ -93,23 +93,19 @@ class Signup extends React.Component {
                     error.empname = ''
                 break;
             case 'empno':
-                error.empno = (value.length !== 0 || value.length !== 4 || typeof value !== 'number') ? 'Enter 4 digit employee id ' : ''
+                error.empno = (value.length !== 4) ? 'Enter 4 digit employee id ' : ''
                 break;
-            case 'password':
-                if (value.length < 8 || value.length !== 0)
-                    error.password = 'Password must be atleast 8 character';
-                else if (this.state.rpassword !== value && this.state.rpassword !== "")
-                    error.password = '"Password not matched"'
-                else
-                    error.password = ''
-                break;
+            case 'password':                
+            error.password =  (value.length < 8) ? 'Password must be atleast 8 character' : ''
+            //error.passmatch = (this.state.rpassword === value) ? '' : 'Password mis-match'
             case 'rpassword':
-                error.passmatch = (this.state.password === value) ? '' : "Password not matched"
+                error.passmatch = (this.state.password === value ) ? '' : 'Password mis-match'
                 break;
             default:
                 break;
         }
-
+        console.log(this.state.password)
+        console.log(this.state.rpassword)
         this.setState({ error, [name]: value })
     }
 
@@ -117,7 +113,7 @@ class Signup extends React.Component {
 
 
     render() {
-        const { roles, department, dept, role, empname, empno, password, rpassword } = this.state
+        const { roles, department, dept, role, empname, empno, password, rpassword,error } = this.state
 
         const { classes, history } = this.props
         return (
@@ -127,11 +123,15 @@ class Signup extends React.Component {
                         <Paper className={classes.signup}>
                             <Typography className={classes.field} variant="h5" align="center">Create Employee</Typography>
                             <TextField type="text" className={classes.field} label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
+                            {error.empname && error.empname}
                             <TextField type="text" className={classes.field} label="Employee No" name="empno" value={empno} onChange={this.handleChange} />
+                            {error.empno && error.empno }
                             <SelectList name="dept" label="Department" handleChange={this.handleChange} value={dept} list={department} />
                             <SelectList name="role" label="Designation" handleChange={this.handleChange} value={role} list={roles} />
                             <TextField type="password" className={classes.field} label="Password" name="password" value={password} onChange={this.handleChange} />
+                            {error.password && error.password}
                             <TextField type="password" className={classes.field} label="Re-Type Password" name="rpassword" value={rpassword} onChange={this.handleChange} />
+                            {error.passmatch && error.passmatch}
                             <Button className={classes.field} variant="contained" color="primary" onClick={this.handleRegister} >Create</Button>
                             <Button className={classes.field} color="primary" onClick={() => { history.push('/signin') }} >Already have account</Button>
                         </Paper>

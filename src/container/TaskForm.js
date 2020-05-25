@@ -18,7 +18,7 @@ const useStyles = (style) => ({
         padding: style.spacing(20),
         borderRadius: '10px',
         border: `1px solid green`,
-        boxShadow: '5px 7px darkgreen',
+        boxShadow: '2px 2px darkgreen',
         maxWidth: '75%',
         minWidth: '75%',
         height: 300
