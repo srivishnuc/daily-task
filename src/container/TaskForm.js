@@ -1,8 +1,9 @@
 import React from 'react'
 import SelectList from '../component/Select'
 import Header from '../component/Header'
-import { Paper, withStyles, TextField, Button, Typography, TextareaAutosize, Box, Grid } from '@material-ui/core'
-import { getData } from '../utility/api'
+import { Paper, withStyles, MenuItem, TextField, Button, Typography, TextareaAutosize, Box, Grid } from '@material-ui/core'
+import { getData, postData } from '../utility/api'
+import { FilterListSharp } from '@material-ui/icons'
 
 
 const useStyles = (style) => ({
@@ -17,8 +18,8 @@ const useStyles = (style) => ({
         marginTop: 50,
         padding: style.spacing(20),
         borderRadius: '10px',
-        border: `1px solid green`,
-        boxShadow: '2px 2px darkgreen',
+        border: `1px solid lightblue`,
+        boxShadow: '2px 2px lightblue',
         maxWidth: '75%',
         minWidth: '75%',
         height: 300
@@ -30,7 +31,7 @@ const useStyles = (style) => ({
         marginTop: style.spacing(16),
         marginLeft: style.spacing(2),
         fontSize: '16px',
-        border: '1px solid green',
+        border: '1px solid lightblue',
         borderRadius: '5px',
         maxWidth: 250,
         maxHeight: 100,
@@ -49,23 +50,36 @@ class TaskForm extends React.Component {
 
     constructor() {
         super()
-        this.state = { query: '', queryDetails: '', queryList: '', empList: '', emp: '', error: { queryDet: '' } }
+        this.state = { query: '', queryDetails: '', queryFullList: [], queryList: '', empList: '', emp: '', error: { queryDet: '' } }
     }
 
 
     componentDidMount() {
-        getData('\query\formData', this.resData)
-
+        getData('/query/formData', this.resData)
     }
 
     resData = (res) => {
-        console.log(res)
+
+        console.log(res.rows[1])
 
         if (res.status === 'success') {
+            const empdet = res.rows[0].empdet.map(d => <MenuItem className={this.props.classes.itemList} key={d.empno} value={d.empno} >{d.empname + ' - ' + d.deptname}</MenuItem>)
+            this.setState({ empList: empdet, queryFullList: res.rows[1].empdet })
+
         }
         else {
 
         }
+    }
+
+    handleSubmit = () => {
+        const { emp, query, queryDetails } = this.state
+        postData('/query/queryData', { assignto: emp, query, queryDetails }, this.afterSubmit)
+    }
+
+    afterSubmit = (res) => {
+        console.log(res)
+        this.setState({ emp: "", query: "", queryDetails: "" })
     }
 
     handleChange = (e) => {
@@ -79,8 +93,19 @@ class TaskForm extends React.Component {
                 break
         }
         // console.log(error)
-        this.setState({ error, [name]: value })
+        this.setState({ error, [name]: value }, () => {
+            const { queryFullList, emp } = this.state
+            console.log(queryFullList)
+            let filterlists = queryFullList.filter((list) => {
+                console.log(list)
+                return list.empno === emp
+            })
+            filterlists.push({ resid: 0, responsibility: "General" })
+            const lists = filterlists.map(r => <MenuItem className={this.props.classes.itemList} key={r.resid} value={r.responsibility} >{r.responsibility}</MenuItem>)
+            this.setState({ queryList: lists })
+        })
     }
+
 
 
     render() {
@@ -90,15 +115,15 @@ class TaskForm extends React.Component {
             <Paper className={classes.root}>
 
                 <Header />
-                <Grid container direction="column" justify="center" alignItems="center" spacing={3}>
+                <Grid container direction="column" justify="flex-end" alignItems="center" spacing={3}>
                     <Grid item xs={12}>
-                        <Box className={classes.box}>
+                        <Paper className={classes.box} elevation={3}>
                             <Typography align="center" variant="h6" >Query Form</Typography>
                             <SelectList className={classes.field} name="emp" label="Assign To" handleChange={this.handleChange} value={emp} list={empList} />
                             <SelectList className={classes.field} name="query" label="Query" handleChange={this.handleChange} value={query} list={queryList} />
                             <TextareaAutosize className={classes.textArea} name="queryDetails" onChange={this.handleChange} value={queryDetails} rowsMin={5} placeholder="Enter Query detail..." />
-                            <Button align="center" >Assign</Button>
-                        </Box>
+                            <Button color="secondary" justify="right" onClick={this.handleSubmit}>Assign</Button>
+                        </Paper>
                     </Grid>
                 </Grid>
             </Paper >

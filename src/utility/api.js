@@ -2,6 +2,7 @@ import { api } from '../constant/index'
 
 
 export const getData = (url, callback) => {
+
     fetch(`${api.url}${url}`, {
         method: 'GET',
         headers: {
@@ -9,7 +10,10 @@ export const getData = (url, callback) => {
             'authorization': localStorage.getItem('token')
         }
     }).then(res => res.json())
-        .then(result => callback(result))
+        .then(result => {
+            // console.log(result)
+            callback(result)
+        })
         .catch(err => callback(err))
 }
 

@@ -15,10 +15,10 @@ import { green } from '@material-ui/core/colors';
 const useStyles = makeStyles({
     list: {
         width: 250,
-        color: "green",
     },
     fullList: {
         width: 'auto',
+        backgroundColor: "black"
     },
     menuIcon: {
         position: 'absolute',

@@ -4,15 +4,19 @@ import { getData, postData } from '../utility/api'
 import SelectList from '../component/Select'
 
 const useStyles = (style) => ({
+    root: {
+        height: 600
+    },
     field: {
+        margin: style.spacing(4)
+    }, textWrap: {
         margin: style.spacing(4)
     },
     signup: {
-        display: 'flex',
-        flexDirection: 'column',
+        height: 600,
+        display: 'block',
         padding: style.spacing(20),
         borderRadius: '10px',
-        width: 'auto'
     },
     itemList: {
         marginTop: style.spacing(8)
@@ -70,7 +74,7 @@ class Signup extends React.Component {
     }
 
     regData = (res) => {
-        if (res.status === 'sucess') {
+        if (res.status === 'success') {
             const dept = res.dept[0].department.map((d) => <MenuItem className={this.props.classes.itemList} key={d.dept_no} value={d.dept_no} >{d.dept_name}</MenuItem>)
             const role = res.roles[0].roles.map((r) => <MenuItem className={this.props.classes.itemList} key={r.des_no} value={r.des_no} >{r.designation}</MenuItem>)
 
@@ -95,11 +99,12 @@ class Signup extends React.Component {
             case 'empno':
                 error.empno = (value.length !== 4) ? 'Enter 4 digit employee id ' : ''
                 break;
-            case 'password':                
-            error.password =  (value.length < 8) ? 'Password must be atleast 8 character' : ''
-            //error.passmatch = (this.state.rpassword === value) ? '' : 'Password mis-match'
+            case 'password':
+                error.password = (value.length < 8) ? 'Password must be atleast 8 character' : ''
+                error.passmatch = value !== this.state.rpassword ? 'Password mis-match' : ''
+                break;
             case 'rpassword':
-                error.passmatch = (this.state.password === value ) ? '' : 'Password mis-match'
+                error.passmatch = value !== this.state.password ? 'Password mis-match' : ''
                 break;
             default:
                 break;
@@ -113,31 +118,33 @@ class Signup extends React.Component {
 
 
     render() {
-        const { roles, department, dept, role, empname, empno, password, rpassword,error } = this.state
+        const { roles, department, dept, role, empname, empno, password, rpassword, error } = this.state
 
         const { classes, history } = this.props
         return (
-            <Grid container direction="row" justify="flex-end" alignItems="center">
-                <Grid item>
-                    <form>
-                        <Paper className={classes.signup}>
-                            <Typography className={classes.field} variant="h5" align="center">Create Employee</Typography>
-                            <TextField type="text" className={classes.field} label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
-                            {error.empname && error.empname}
-                            <TextField type="text" className={classes.field} label="Employee No" name="empno" value={empno} onChange={this.handleChange} />
-                            {error.empno && error.empno }
-                            <SelectList name="dept" label="Department" handleChange={this.handleChange} value={dept} list={department} />
-                            <SelectList name="role" label="Designation" handleChange={this.handleChange} value={role} list={roles} />
-                            <TextField type="password" className={classes.field} label="Password" name="password" value={password} onChange={this.handleChange} />
+            <Grid container direction="row" justify="flex-end" >
+                <Grid item className={classes.root}>
+                    <Paper className={classes.signup}>
+                        <Typography className={classes.field} variant="h5" align="center">Create Employee</Typography>
+                        <TextField type="text" label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
+                        <TextField type="text" className={classes.field} label="Employee No" name="empno" value={empno} onChange={this.handleChange} />
+                        {error.empno && error.empno}
+                        <SelectList name="dept" label="Department" handleChange={this.handleChange} value={dept} list={department} />
+                        <SelectList name="role" label="Designation" handleChange={this.handleChange} value={role} list={roles} />
+                        <TextField type="password" className={classes.field} label="Password" name="password" value={password} onChange={this.handleChange} />
+                        <Typography color="error" variant="caption" display="block" gutterBottom>
                             {error.password && error.password}
-                            <TextField type="password" className={classes.field} label="Re-Type Password" name="rpassword" value={rpassword} onChange={this.handleChange} />
+                        </Typography>
+                        <TextField type="password" className={classes.field} label="Re-Type Password" name="rpassword" value={rpassword} onChange={this.handleChange} />
+                        <Typography color="error" variant="caption" display="block" gutterBottom>
                             {error.passmatch && error.passmatch}
-                            <Button className={classes.field} variant="contained" color="primary" onClick={this.handleRegister} >Create</Button>
-                            <Button className={classes.field} color="primary" onClick={() => { history.push('/signin') }} >Already have account</Button>
-                        </Paper>
-                    </form>
+                        </Typography>
+                        <Button className={classes.field} variant="contained" color="primary" onClick={this.handleRegister} >Create</Button>
+                        <Button className={classes.field} color="primary" onClick={() => { history.push('/signin') }} >Already have account</Button>
+                    </Paper>
+
                 </Grid>
-            </Grid>
+            </Grid >
         )
     }
 
