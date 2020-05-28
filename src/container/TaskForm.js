@@ -3,8 +3,7 @@ import SelectList from '../component/Select'
 import Header from '../component/Header'
 import { Paper, withStyles, MenuItem, TextField, Button, Typography, TextareaAutosize, Box, Grid } from '@material-ui/core'
 import { getData, postData } from '../utility/api'
-import { FilterListSharp } from '@material-ui/icons'
-
+import { validateData } from '../constant'
 
 const useStyles = (style) => ({
     root: {
@@ -50,7 +49,7 @@ class TaskForm extends React.Component {
 
     constructor() {
         super()
-        this.state = { query: '', queryDetails: '', queryFullList: [], queryList: '', empList: '', emp: '', error: { queryDet: '' } }
+        this.state = { query: '', queryDetails: '', queryFullList: [], queryList: '', empList: '', emp: '', error: { queryDetails: '' } }
     }
 
 
@@ -60,7 +59,7 @@ class TaskForm extends React.Component {
 
     resData = (res) => {
 
-        console.log(res.rows[1])
+        //console.log(res.rows[1])
 
         if (res.status === 'success') {
             const empdet = res.rows[0].empdet.map(d => <MenuItem className={this.props.classes.itemList} key={d.empno} value={d.empno} >{d.empname + ' - ' + d.deptname}</MenuItem>)
@@ -72,32 +71,36 @@ class TaskForm extends React.Component {
         }
     }
 
-    handleSubmit = () => {
-        const { emp, query, queryDetails } = this.state
-        postData('/query/queryData', { assignto: emp, query, queryDetails }, this.afterSubmit)
+    handleSubmit = (e) => {
+        const { emp, query, queryDetails, error } = this.state
+        if (validateData(error)) {
+            const data = { assignto: emp, query, queryDetails }
+            this.setState({ emp: "", query: "", queryDetails: "" })
+            postData('/query/queryData', data, this.afterSubmit)
+        }
+
+
     }
 
     afterSubmit = (res) => {
         console.log(res)
-        this.setState({ emp: "", query: "", queryDetails: "" })
     }
 
     handleChange = (e) => {
         const { name, value } = e.target
-        const { error } = this.state
+        const { error, queryDetails } = this.state
         switch (name) {
             case 'queryDetails':
-                error.empname = (value.length === 0 || value.length > 3000) ? 'Minimum 20 to Maximum 3000 characters' : ''
+                error.queryDetails = (value.length === 0 || value.length > 3000) ? 'Minimum 20 to Maximum 3000 characters' : ''
                 break
             default:
+                error.queryDetails = queryDetails.length === 0 ? 'Minimum 20 to Maximum 3000 characters' : ''
                 break
         }
-        // console.log(error)
+        console.log(error)
         this.setState({ error, [name]: value }, () => {
             const { queryFullList, emp } = this.state
-            console.log(queryFullList)
             let filterlists = queryFullList.filter((list) => {
-                console.log(list)
                 return list.empno === emp
             })
             filterlists.push({ resid: 0, responsibility: "General" })
@@ -109,7 +112,7 @@ class TaskForm extends React.Component {
 
 
     render() {
-        const { query, queryDetails, queryList, empList, emp } = this.state
+        const { query, queryDetails, queryList, empList, emp, error } = this.state
         const { classes } = this.props
         return (
             <Paper className={classes.root}>
@@ -122,6 +125,7 @@ class TaskForm extends React.Component {
                             <SelectList className={classes.field} name="emp" label="Assign To" handleChange={this.handleChange} value={emp} list={empList} />
                             <SelectList className={classes.field} name="query" label="Query" handleChange={this.handleChange} value={query} list={queryList} />
                             <TextareaAutosize className={classes.textArea} name="queryDetails" onChange={this.handleChange} value={queryDetails} rowsMin={5} placeholder="Enter Query detail..." />
+                            {error.queryDetails && error.queryDetails}
                             <Button color="secondary" justify="right" onClick={this.handleSubmit}>Assign</Button>
                         </Paper>
                     </Grid>

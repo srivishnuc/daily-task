@@ -38,8 +38,8 @@ const useStyles = (styles) => ({
 class App extends React.Component {
 
 
-  // ProtectedRoute = (RouteComponent, props) => localStorage.getItem('token') ? <RouteComponent {...props} /> : <Redirect to={{ pathname: '/signin' }} />
-  ProtectedRoute = (RouteComponent, props) => 1 === 1 ? <RouteComponent {...props} /> : <Redirect to={{ pathname: '/signin' }} />
+  ProtectedRoute = (RouteComponent, props) => localStorage.getItem('token') ? <RouteComponent {...props} /> : <Redirect to={{ pathname: '/signin' }} />
+  // ProtectedRoute = (RouteComponent, props) => 1 === 1 ? <RouteComponent {...props} /> : <Redirect to={{ pathname: '/signin' }} />
   render() {
     const { classes } = this.props
     return (

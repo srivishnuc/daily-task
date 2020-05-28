@@ -42,7 +42,7 @@ class Signin extends React.Component {
         if (res.status === 'success') {
             this.setState({ empno: '', password: '' })
             localStorage.setItem('token', res.data)
-            history.push('/home')
+            history.push('/')
         }
         else
             console.error('login failed')

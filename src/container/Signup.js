@@ -2,25 +2,34 @@ import React from 'react'
 import { Typography, TextField, Button, Paper, withStyles, Grid, MenuItem } from '@material-ui/core'
 import { getData, postData } from '../utility/api'
 import SelectList from '../component/Select'
+import { validateData } from '../constant'
 
 const useStyles = (style) => ({
     root: {
         height: 600
     },
     field: {
-        margin: style.spacing(4)
-    }, textWrap: {
-        margin: style.spacing(4)
+        margin: style.spacing(4),
+        display: 'block'
     },
     signup: {
         height: 600,
         display: 'block',
         padding: style.spacing(20),
         borderRadius: '10px',
+    }, dropdown: {
+        margin: style.spacing(48),
     },
     itemList: {
         marginTop: style.spacing(8)
+    },
+    error: {
+        position: 'absolute',
+        margin: 0,
+        padding: 0,
+        display: 'block'
     }
+
 })
 
 
@@ -36,11 +45,7 @@ class Signup extends React.Component {
         getData('/user/regData', this.regData)
     }
 
-    validateData = (error) => {
-        let valid = true;
-        Object.values(error).forEach(val => val.length > 0 && (valid = false))
-        return valid
-    }
+
 
     handleRegister = () => {
         const { dept, role, empname, empno, password } = this.state
@@ -53,7 +58,7 @@ class Signup extends React.Component {
         // if (password !== rpassword)
         //     this.setState({ error: true, errorMsg: 'Password did not match' })
         const data = { deptno: dept, desno: role, empname, empno, password }
-        if (this.validateData(this.state.error)) {
+        if (validateData(this.state.error)) {
             postData('/user/', data, this.afterRegister)
             // console.info('Valid Data')
         }
@@ -126,11 +131,16 @@ class Signup extends React.Component {
                 <Grid item className={classes.root}>
                     <Paper className={classes.signup}>
                         <Typography className={classes.field} variant="h5" align="center">Create Employee</Typography>
-                        <TextField type="text" label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
+                        <TextField className={classes.field} type="text" label="Employee Name" name="empname" value={empname} onChange={this.handleChange} />
+                        <Typography className={classes.error} color="error" variant="caption" display="block" gutterBottom>
+                            {error.empname && error.empname}
+                        </Typography>
                         <TextField type="text" className={classes.field} label="Employee No" name="empno" value={empno} onChange={this.handleChange} />
-                        {error.empno && error.empno}
-                        <SelectList name="dept" label="Department" handleChange={this.handleChange} value={dept} list={department} />
-                        <SelectList name="role" label="Designation" handleChange={this.handleChange} value={role} list={roles} />
+                        <Typography className={classes.error} color="error" variant="caption" display="block" gutterBottom>
+                            {error.empno && error.empno}
+                        </Typography>
+                        <SelectList className={classes.dropdown} name="dept" label="Department" handleChange={this.handleChange} value={dept} list={department} />
+                        <SelectList className={classes.dropdown} name="role" label="Designation" handleChange={this.handleChange} value={role} list={roles} />
                         <TextField type="password" className={classes.field} label="Password" name="password" value={password} onChange={this.handleChange} />
                         <Typography color="error" variant="caption" display="block" gutterBottom>
                             {error.password && error.password}
