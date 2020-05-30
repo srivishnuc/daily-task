@@ -10,23 +10,25 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton'
 import { Home, Notes, Menu } from '@material-ui/icons';
-import { green } from '@material-ui/core/colors';
 
-const useStyles = makeStyles({
-    list: {
-        width: 250,
-    },
-    fullList: {
-        width: 'auto',
-        backgroundColor: "black"
-    },
-    menuIcon: {
-        position: 'absolute',
-        left: '3%',
-        margin: 0
+const useStyles = makeStyles(theme => {
+    console.log(theme)
+    return ({
+        list: {
+            width: 250,
+            color: `${theme.palette.primary.main}`
+        },
+        fullList: {
+            width: 'auto',
+        },
+        menuIcon: {
+            position: 'absolute',
+            left: '3%',
+            margin: 0
 
-    }
-});
+        }
+    })
+})
 
 export default function TemporaryDrawer(props) {
     const classes = useStyles();

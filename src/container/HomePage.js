@@ -1,14 +1,24 @@
 import React from 'react'
 import Header from '../component/Header'
-import { Paper, withStyles, Button } from '@material-ui/core'
+import { Paper, withStyles, makeStyles } from '@material-ui/core'
 
-const useStyles = (styles) => ({
-    root: {
-        width: 'auto',
-        height: 800
-    }
+const useStyles = makeStyles(theme => {
+    return ({
+        root: {
+            width: 'auto',
+            height: 800,
+            color: `${theme.palette.primary.light}`
+        }
 
-})
+    })
+}
+)
+
+
+
+
+
+
 
 class HomePage extends React.Component {
 

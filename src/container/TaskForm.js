@@ -1,21 +1,21 @@
 import React from 'react'
 import SelectList from '../component/Select'
 import Header from '../component/Header'
-import { Paper, withStyles, MenuItem, TextField, Button, Typography, TextareaAutosize, Box, Grid } from '@material-ui/core'
+import { Paper, withStyles, MenuItem, TextField, Button, Typography, TextareaAutosize, Box, Grid, makeStyles } from '@material-ui/core'
 import { getData, postData } from '../utility/api'
 import { validateData } from '../constant'
 
-const useStyles = (style) => ({
+const useStyles = makeStyles(theme => ({
     root: {
         width: 'auto',
         height: 800
     },
     field: {
-        margin: style.spacing(4)
+        margin: theme.spacing(4)
     },
     box: {
         marginTop: 50,
-        padding: style.spacing(20),
+        padding: theme.spacing(20),
         borderRadius: '10px',
         border: `1px solid lightblue`,
         boxShadow: '2px 2px lightblue',
@@ -24,11 +24,11 @@ const useStyles = (style) => ({
         height: 300
     },
     itemList: {
-        marginTop: style.spacing(8)
+        marginTop: theme.spacing(8)
     },
     textArea: {
-        marginTop: style.spacing(16),
-        marginLeft: style.spacing(2),
+        marginTop: theme.spacing(16),
+        marginLeft: theme.spacing(2),
         fontSize: '16px',
         border: '1px solid lightblue',
         borderRadius: '5px',
@@ -43,7 +43,7 @@ const useStyles = (style) => ({
             outline: 'none'
         }
     }
-})
+}))
 
 class TaskForm extends React.Component {
 
