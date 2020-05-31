@@ -24,13 +24,7 @@ const theme = createMuiTheme({
 })
 
 
-const useStyles = (styles) => ({
-  root: {
-    width: 'auto',
-    height: 800
-  }
 
-})
 
 
 
@@ -41,7 +35,8 @@ class App extends React.Component {
   ProtectedRoute = (RouteComponent, props) => localStorage.getItem('token') ? <RouteComponent {...props} /> : <Redirect to={{ pathname: '/signin' }} />
   // ProtectedRoute = (RouteComponent, props) => 1 === 1 ? <RouteComponent {...props} /> : <Redirect to={{ pathname: '/signin' }} />
   render() {
-    const { classes } = this.props
+
+
     return (
       <ThemeProvider theme={theme} >
         <Router>
@@ -61,4 +56,4 @@ class App extends React.Component {
 }
 
 
-export default (withStyles)(useStyles)(App);
+export default App;

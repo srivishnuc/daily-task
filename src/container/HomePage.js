@@ -1,18 +1,18 @@
 import React from 'react'
 import Header from '../component/Header'
-import { Paper, withStyles, makeStyles } from '@material-ui/core'
+import { Paper, withStyles } from '@material-ui/core'
+import { getData } from '../utility/api'
 
-const useStyles = makeStyles(theme => {
-    return ({
-        root: {
-            width: 'auto',
-            height: 800,
-            color: `${theme.palette.primary.light}`
-        }
 
-    })
-}
-)
+const useStyles = withStyles(theme => ({
+    page: {
+        width: 'auto',
+        height: 800,
+        color: `${theme.palette.secondary.dark}`
+    }
+
+}))
+
 
 
 
@@ -23,10 +23,20 @@ const useStyles = makeStyles(theme => {
 class HomePage extends React.Component {
 
 
+    componentDidMount() {
+        getData('\query\queryList', this.afterGet)
+    }
+
+    afterGet = (res) => {
+        if (res.status === 'success') {
+
+        }
+    }
+
     render() {
         const { classes } = this.props
         return (
-            <Paper className={classes.root} elevation={3}>
+            <Paper className={classes.page} elevation={3}>
                 <Header />
             </Paper >
         )
@@ -34,4 +44,4 @@ class HomePage extends React.Component {
 }
 
 
-export default (withStyles)(useStyles)(HomePage)
+export default (useStyles)(HomePage)

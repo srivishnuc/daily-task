@@ -1,11 +1,10 @@
 import React from 'react'
-import { withStyles, AppBar, Typography, Button, Toolbar } from '@material-ui/core'
+import { makeStyles, AppBar, Typography, Button, Toolbar } from '@material-ui/core'
 // import { logout } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
 import Drawer from './Drawer'
 
-
-const useStyles = () => ({
+const useStyles = makeStyles(theme => ({
     root: {
         display: "flex",
         flexDirection: "row",
@@ -22,11 +21,17 @@ const useStyles = () => ({
             cursor: 'pointer',
         }
     },
-})
+}))
 
 function Header(props) {
+
+
+
+
+
     const history = useHistory()
-    const { classes } = props
+    const classes = useStyles(props)
+    console.log(classes)
     const handleLogout = () => {
         //localStorage.removeItem('token')
         history.push('/signin')
@@ -36,10 +41,9 @@ function Header(props) {
         <React.Fragment>
             <AppBar className={classes.root} position="static">
                 <Drawer history={history} />
-                <Typography variant="h5">Task Reporter</Typography>
+                <Typography color="secondary" variant="h5">Task Reporter</Typography>
                 <img className={classes.logout} src={require(`../images/icons/logout.png`)} onClick={handleLogout} />
             </AppBar >
-
         </React.Fragment>
     )
 }
@@ -48,4 +52,4 @@ function Header(props) {
 
 
 
-export default (withStyles)(useStyles)(Header);
+export default Header;

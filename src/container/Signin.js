@@ -5,21 +5,21 @@ import { Redirect, Route } from 'react-router-dom'
 
 
 
-const useStyles = (style) => ({
+const useStyles = withStyles(theme => ({
 
     field: {
-        margin: style.spacing(4)
+        margin: theme.spacing(2)
     },
     login: {
         display: 'flex',
         flexDirection: 'column',
-        padding: style.spacing(20),
+        padding: theme.spacing(20),
         borderRadius: '10px',
         marginTop: '35%',
         marginRight: '10%'
     }
 })
-
+)
 
 
 
@@ -92,4 +92,4 @@ class Signin extends React.Component {
 }
 
 
-export default (withStyles)(useStyles)(Signin)
+export default (useStyles)(Signin)

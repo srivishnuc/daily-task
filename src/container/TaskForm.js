@@ -1,11 +1,11 @@
 import React from 'react'
 import SelectList from '../component/Select'
 import Header from '../component/Header'
-import { Paper, withStyles, MenuItem, TextField, Button, Typography, TextareaAutosize, Box, Grid, makeStyles } from '@material-ui/core'
+import { Paper, withStyles, MenuItem, TextField, Button, Typography, TextareaAutosize, Box, Grid } from '@material-ui/core'
 import { getData, postData } from '../utility/api'
 import { validateData } from '../constant'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = withStyles(theme => ({
     root: {
         width: 'auto',
         height: 800
@@ -17,8 +17,8 @@ const useStyles = makeStyles(theme => ({
         marginTop: 50,
         padding: theme.spacing(20),
         borderRadius: '10px',
-        border: `1px solid lightblue`,
-        boxShadow: '2px 2px lightblue',
+        border: `1px solid ${theme.palette.primary.light}`,
+        boxShadow: `2px 2px ${theme.palette.primary.light}`,
         maxWidth: '75%',
         minWidth: '75%',
         height: 300
@@ -30,14 +30,14 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(16),
         marginLeft: theme.spacing(2),
         fontSize: '16px',
-        border: '1px solid lightblue',
+        border: `1px solid ${theme.palette.primary.light}`,
         borderRadius: '5px',
         maxWidth: 250,
         maxHeight: 100,
         minHeight: 25,
         minWidth: 250,
         '&:hover': {
-            boxShadow: '5px 7px #888',
+            boxShadow: `2px 2px ${theme.palette.secondary.light}`,
         },
         '&:focus': {
             outline: 'none'
@@ -140,5 +140,5 @@ class TaskForm extends React.Component {
 
 }
 
-export default (withStyles)(useStyles)(TaskForm)
+export default (useStyles)(TaskForm)
 
