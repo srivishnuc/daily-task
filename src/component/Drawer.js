@@ -2,9 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton'
 import { Home, Notes, Menu } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => {
-    console.log(theme)
+
     return ({
         list: {
             width: 250,
@@ -54,7 +52,12 @@ export default function TemporaryDrawer(props) {
             label: 'Query',
             icon: <Notes />,
             route: '/query'
-        }];
+        }, {
+            label: 'Take Task',
+            icon: <Notes />,
+            route: '/queryresponse'
+        }
+        ];
         return (
             <div
                 className={clsx(classes.list, {

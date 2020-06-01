@@ -1,7 +1,7 @@
 import React from 'react'
 import SelectList from '../component/Select'
 import Header from '../component/Header'
-import { Paper, withStyles, MenuItem, TextField, Button, Typography, TextareaAutosize, Box, Grid } from '@material-ui/core'
+import { Paper, withStyles, MenuItem, Button, Typography, TextareaAutosize, Grid } from '@material-ui/core'
 import { getData, postData } from '../utility/api'
 import { validateData } from '../constant'
 

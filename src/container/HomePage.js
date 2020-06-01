@@ -1,7 +1,6 @@
 import React from 'react'
 import Header from '../component/Header'
 import { Paper, withStyles } from '@material-ui/core'
-import { getData } from '../utility/api'
 
 
 const useStyles = withStyles(theme => ({
@@ -22,22 +21,19 @@ const useStyles = withStyles(theme => ({
 
 class HomePage extends React.Component {
 
-
-    componentDidMount() {
-        getData('\query\queryList', this.afterGet)
+    constructor() {
+        super()
+        this.state = {}
     }
 
-    afterGet = (res) => {
-        if (res.status === 'success') {
-
-        }
-    }
 
     render() {
         const { classes } = this.props
+        const { queryListBy } = this.state
         return (
             <Paper className={classes.page} elevation={3}>
                 <Header />
+                {queryListBy}
             </Paper >
         )
     }

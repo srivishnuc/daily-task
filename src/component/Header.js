@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, AppBar, Typography, Button, Toolbar } from '@material-ui/core'
+import { makeStyles, AppBar, Typography } from '@material-ui/core'
 // import { logout } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
 import Drawer from './Drawer'
@@ -31,7 +31,6 @@ function Header(props) {
 
     const history = useHistory()
     const classes = useStyles(props)
-    console.log(classes)
     const handleLogout = () => {
         //localStorage.removeItem('token')
         history.push('/signin')
@@ -42,7 +41,7 @@ function Header(props) {
             <AppBar className={classes.root} position="static">
                 <Drawer history={history} />
                 <Typography color="secondary" variant="h5">Task Reporter</Typography>
-                <img className={classes.logout} src={require(`../images/icons/logout.png`)} onClick={handleLogout} />
+                <img alt="logoutIcon" className={classes.logout} src={require(`../images/icons/logout.png`)} onClick={handleLogout} />
             </AppBar >
         </React.Fragment>
     )
