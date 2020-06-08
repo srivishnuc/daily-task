@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '../component/FormDialog'
+import Chip from '@material-ui/core/Chip'
 
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SimpleCard(props) {
     const classes = useStyles();
-    const { data } = props
+    const { data, status } = props
     const [dialog, setDialog] = useState(false);
 
     const handleclick = () => {
@@ -36,7 +37,7 @@ export default function SimpleCard(props) {
 
     return (
         <React.Fragment>
-            {dialog && <Dialog dialog={dialog} handleClose={handleClose} />}
+            {(dialog && status !== "COMPLETED") && <Dialog status={status} dialog={dialog} handleClose={handleClose} />}
             <Card onClick={handleclick} className={classes.card} >
                 <CardContent>
                     <Typography variant="h6" color="textSecondary" gutterBottom>
@@ -48,9 +49,10 @@ export default function SimpleCard(props) {
                     <Typography variant="caption" color="textSecondary" gutterBottom>
                         Assigned by {data.assignby} -  {data.createdtime}
                     </Typography>
+                    {status === "COMPLETED" && < Chip color="secondary" label="COMPLETED" />}
                 </CardContent>
             </Card >
-        </React.Fragment>
+        </React.Fragment >
     );
 
 

@@ -3,7 +3,6 @@ import { getData } from '../utility/api'
 import Card from '../component/CountCard'
 import { Paper, Box, withStyles } from '@material-ui/core'
 import Header from '../component/Header'
-import FormDialog from '../component/FormDialog'
 
 const useStyles = withStyles(theme => ({
     root: {
@@ -35,7 +34,7 @@ class TaskResponse extends React.Component {
     afterGet = (res) => {
         console.log(res)
         if (res.status === 'success') {
-            const data = res.rows[0].by.map(d => <Card key={d.id} data={d} />)
+            const data = res.rows[0].by.map(d => <Card status={d.status} key={d.id} data={d} />)
             this.setState({ queryListBy: data })
         }
     }

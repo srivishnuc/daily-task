@@ -8,16 +8,30 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SelectList from '../component/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import { postData } from '../utility/api'
 
 export default function FormDialog(props) {
 
 
     const [status, setStatus] = useState('')
 
-    const statuses = [{ id: 1, status: 'In-Process' }, { id: 2, status: 'Completed' }]
+    var statuses = []
+
+    if (props.status === "NEW") {
+        statuses = [{ id: 1, status: 'In-Process' }, { id: 2, status: 'Completed' }]
+
+    }
+    else {
+        statuses = [{ id: 2, status: 'Completed' }]
+    }
+
     const statusList = statuses.map(list => <MenuItem key={list.id} value={list.status}>  {list.status} </MenuItem>)
     const handleChange = (e) => {
         setStatus(e.target.value)
+    }
+
+    const handleAdd = () => {
+        postData()
     }
 
     return (
@@ -25,7 +39,6 @@ export default function FormDialog(props) {
             <Dialog open={props.dialog} onClose={props.handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Set Status</DialogTitle>
                 <DialogContent>
-
                     <SelectList label="Status" handleChange={handleChange} value={status} list={statusList} />
                     <TextField
                         autoFocus
@@ -40,7 +53,7 @@ export default function FormDialog(props) {
                     <Button onClick={props.handleClose} color="primary">
                         Cancel
                  </Button>
-                    <Button onClick={props.handleClose} color="primary">
+                    <Button onClick={handleAdd} color="primary">
                         Add
           </Button>
                 </DialogActions>
