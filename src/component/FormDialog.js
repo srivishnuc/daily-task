@@ -14,24 +14,42 @@ export default function FormDialog(props) {
 
 
     const [status, setStatus] = useState('')
+    const [remark, setRemark] = useState('')
+
 
     var statuses = []
 
     if (props.status === "NEW") {
-        statuses = [{ id: 1, status: 'In-Process' }, { id: 2, status: 'Completed' }]
+        statuses = [{ id: 1, status: 'IN-PROCESS' }, { id: 2, status: 'COMPLETED' }]
 
     }
     else {
-        statuses = [{ id: 2, status: 'Completed' }]
+        statuses = [{ id: 2, status: 'COMPLETED' }]
     }
+
 
     const statusList = statuses.map(list => <MenuItem key={list.id} value={list.status}>  {list.status} </MenuItem>)
     const handleChange = (e) => {
-        setStatus(e.target.value)
+        if (e.target.id === "remark") {
+            setRemark(e.target.value)
+        }
+        else {
+            setStatus(e.target.value)
+        }
     }
 
     const handleAdd = () => {
-        postData()
+        postData('/query/queryLog', { id: props.id, status, remark }, afterPost)
+        props.handleClose()
+        setRemark('')
+    }
+
+    const afterPost = (res) => {
+        console.log(res)
+        if (res.status === "success") {
+            console.log('success')
+        }
+
     }
 
     return (
@@ -43,10 +61,12 @@ export default function FormDialog(props) {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="name"
+                        id="remark"
                         label="Remark"
                         type="text"
                         fullWidth
+                        value={remark}
+                        onChange={handleChange}
                     />
                 </DialogContent>
                 <DialogActions>

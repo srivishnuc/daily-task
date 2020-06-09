@@ -22,6 +22,8 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function SimpleCard(props) {
+
+
     const classes = useStyles();
     const { data, status } = props
     const [dialog, setDialog] = useState(false);
@@ -37,7 +39,7 @@ export default function SimpleCard(props) {
 
     return (
         <React.Fragment>
-            {(dialog && status !== "COMPLETED") && <Dialog status={status} dialog={dialog} handleClose={handleClose} />}
+            {(dialog && status !== "COMPLETED") && <Dialog id={data.id} status={status} dialog={dialog} handleClose={handleClose} />}
             <Card onClick={handleclick} className={classes.card} >
                 <CardContent>
                     <Typography variant="h6" color="textSecondary" gutterBottom>
