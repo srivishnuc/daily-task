@@ -27,7 +27,7 @@ class TaskResponse extends React.Component {
         this.state = { queryListBy: "" }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         getData('/query/queryList', this.afterGet)
     }
 
