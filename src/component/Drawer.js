@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => {
     return ({
         list: {
             width: 250,
-            color: `${theme.palette.primary.main}`
+            color: `${theme.palette.secondary[800]}`
         },
         fullList: {
             width: 'auto',

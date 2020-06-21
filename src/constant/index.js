@@ -1,6 +1,10 @@
+const isLocalHost = window.location.href.includes('localhost');
+
 export const api = {
-    url: 'http://localhost:8000',
+    url: isLocalHost ? 'http://localhost:8000' : 'https://dailytask0.herokuapp.com'
 }
+
+
 
 
 export const validateData = (error) => {

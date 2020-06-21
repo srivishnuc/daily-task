@@ -6,7 +6,7 @@ import TaskForm from './container/TaskForm';
 import TaskResponse from './container/TaskResponse'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core'
-import { cyan, teal, red } from '@material-ui/core/colors';
+import { cyan, grey, red } from '@material-ui/core/colors';
 require('typeface-roboto')
 
 
@@ -14,7 +14,7 @@ require('typeface-roboto')
 const theme = createMuiTheme({
   palette: {
     primary: cyan,
-    secondary: teal
+    secondary: grey
   },
   status: {
     danger: red

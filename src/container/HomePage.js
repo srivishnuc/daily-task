@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../component/Header'
-import { Paper, withStyles, Card, CardContent } from '@material-ui/core'
+import { Paper, withStyles, Card, CardContent, Box, Typography } from '@material-ui/core'
 import { getData } from '../utility/api'
 
 const useStyles = withStyles(theme => ({
@@ -8,6 +8,16 @@ const useStyles = withStyles(theme => ({
         width: 'auto',
         height: 800,
         color: `${theme.palette.secondary.dark}`
+    },
+    Box: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: "center"
+
+    },
+    card: {
+        width: '100%',
+        textAlign: 'center'
     }
 
 }))
@@ -23,21 +33,28 @@ class HomePage extends React.Component {
 
     constructor() {
         super()
-        this.state = { count: [] }
+        this.state = { counter: [], refresh: false }
     }
 
 
     afterGetData = (res) => {
-        console.log(res)
-        if (res.status == "success") {
-            this.setState({ count: res.rows })
+        console.log(res.rows)
+        if (res.status === "success") {
+
+            let count = [];
+            count.push(res.rows[0].completed)
+            count.push(res.rows[0].new)
+            count.push(res.rows[0].inprocess)
+            this.setState({ counter: count })
+
+
         }
 
 
     }
 
     componentDidMount() {
-        getData(`/query/queryCount`, this.afterGetData)
+        this.iterate = setInterval(getData(`/query/queryCount`, this.afterGetData), 60000)
     }
 
 
@@ -45,14 +62,16 @@ class HomePage extends React.Component {
 
     render() {
         const { classes } = this.props
-        const { count } = this.state
+        const { counter } = this.state
 
-        const counter = count.map(c => <Card key={c.status} > <CardContent>{c.status} - {c.count}</CardContent></Card>)
+        const taskCounter = counter.map(c => <Card className={classes.card} key={c.status} > <Typography variant="h6">{c.status} </Typography><CardContent >{c.count} </CardContent></Card>)
 
         return (
             <Paper className={classes.page} elevation={3}>
                 <Header />
-                {counter}
+                <Box className={classes.Box}>
+                    {taskCounter}
+                </Box>
             </Paper >
         )
     }
